@@ -1,0 +1,117 @@
+{
+  "_meta": {
+    "projeto": "Casa Iperó",
+    "modelo_revit": "tentativa-de-preservar-a-frente-v1",
+    "ultima_atualizacao": "2025-06-06",
+    "area_piso_m2": 100,
+    "notas": "Quantitativos extraídos diretamente do modelo Revit via MCP"
+  },
+  "sections": [
+    {
+      "id": "radier",
+      "num": 1,
+      "nome": "Fundação — Radier nervurado",
+      "descricao": "laje 10cm + vigas de bordo 20×30cm · fck 25 MPa",
+      "items": [
+        { "id": "radier_concreto",    "nome": "Concreto usinado fck 25 MPa",     "nota": "~10m³ laje + ~5m³ nervuras = 15m³",              "qty": 15,  "unit": "m³",      "preco_sugerido": 450 },
+        { "id": "radier_aco",         "nome": "Aço CA-50 (malha + nervuras)",    "nota": "malha Q-131 + barras Ø10mm",                     "qty": 180, "unit": "kg",      "preco_sugerido": 12  },
+        { "id": "radier_manta",       "nome": "Impermeabilização (manta)",       "nota": "manta asfáltica ou blanket sob o radier",        "qty": 110, "unit": "m²",      "preco_sugerido": 22  },
+        { "id": "radier_brita",       "nome": "Brita e areia (base)",            "nota": "colchão drenante 10cm sob o radier",             "qty": 12,  "unit": "m³",      "preco_sugerido": 130 },
+        { "id": "radier_forma",       "nome": "Forma de madeira (bordas)",       "nota": "forma para vigas de bordo",                     "qty": 90,  "unit": "m²",      "preco_sugerido": 8   }
+      ]
+    },
+    {
+      "id": "alvenaria",
+      "num": 2,
+      "nome": "Alvenaria estrutural",
+      "descricao": "bloco cerâmico 14×19×39 · 86,2m de paredes · h=2,80m",
+      "aviso": "Área bruta de parede: ~241 m². Descontar vãos de janelas/portas (~40 m²) → área líquida estimada: ~200 m²",
+      "items": [
+        { "id": "alv_bloco",          "nome": "Bloco cerâmico estrutural 14×19×39", "nota": "~25 blocos/m² · 200m² líquidos + 10% quebra", "qty": 5500, "unit": "un",    "preco_sugerido": 3.20 },
+        { "id": "alv_argamassa",      "nome": "Argamassa de assentamento",         "nota": "traço 1:2:8 ou industrializada",               "qty": 18,   "unit": "sc 20kg", "preco_sugerido": 280  },
+        { "id": "alv_graute",         "nome": "Graute (preenchimento pilares)",    "nota": "alvenaria estrutural exige grauteamento",      "qty": 4,    "unit": "m³",      "preco_sugerido": 420  },
+        { "id": "alv_vergas",         "nome": "Vergas e contravergas",             "nota": "concreto pré-moldado sobre vãos",              "qty": 50,   "unit": "m",       "preco_sugerido": 45   }
+      ]
+    },
+    {
+      "id": "cobertura",
+      "num": 3,
+      "nome": "Cobertura",
+      "descricao": "telha sanduíche PU 40mm · 125 m² · sem forro",
+      "items": [
+        { "id": "cob_telha",          "nome": "Telha sanduíche PU 40mm",         "nota": "área projetada + 15% cortes e emendas",         "qty": 144, "unit": "m²",      "preco_sugerido": 130 },
+        { "id": "cob_estrutura",      "nome": "Estrutura metálica (terças)",      "nota": "perfis U ou I para apoio da telha sanduíche",   "qty": 200, "unit": "kg",      "preco_sugerido": 28  },
+        { "id": "cob_calha",          "nome": "Calha e rufos",                   "nota": "calha galvanizada perimetral",                  "qty": 45,  "unit": "m",       "preco_sugerido": 55  },
+        { "id": "cob_acessorios",     "nome": "Parafusos e acessórios",          "nota": "parafusos autobrocantes, espumas vedadoras",    "qty": 1,   "unit": "vb",      "preco_sugerido": 800 }
+      ]
+    },
+    {
+      "id": "acabamento",
+      "num": 4,
+      "nome": "Acabamento de paredes",
+      "descricao": "reboco + massa corrida + tinta · 2 lados",
+      "items": [
+        { "id": "acab_chapisco",      "nome": "Chapisco",                        "nota": "2 faces · ~350 m² líquidos",                    "qty": 350, "unit": "m²",      "preco_sugerido": 4   },
+        { "id": "acab_reboco",        "nome": "Reboco (argamassa)",              "nota": "2cm espessura · saco 20kg rende ~1m²",          "qty": 380, "unit": "sc",      "preco_sugerido": 18  },
+        { "id": "acab_massa",         "nome": "Massa corrida PVA (interna)",     "nota": "2 demãos · rendimento ~12m²/lata",             "qty": 30,  "unit": "lata 18L","preco_sugerido": 65  },
+        { "id": "acab_tinta_int",     "nome": "Tinta acrílica lavável (interna)","nota": "2 demãos · rende ~15m²/L",                     "qty": 25,  "unit": "lata 18L","preco_sugerido": 75  },
+        { "id": "acab_selador",       "nome": "Selador acrílico (fachada)",      "nota": "preparação da fachada externa",                 "qty": 8,   "unit": "lata 18L","preco_sugerido": 55  },
+        { "id": "acab_tinta_ext",     "nome": "Tinta acrílica (fachada)",        "nota": "cor externa · 2 demãos",                        "qty": 8,   "unit": "lata 18L","preco_sugerido": 90  }
+      ]
+    },
+    {
+      "id": "piso",
+      "num": 5,
+      "nome": "Piso",
+      "descricao": "radier polido + verniz (geral) · porcelanato no box (banheiros)",
+      "items": [
+        { "id": "piso_polimento",     "nome": "Polimento do radier",             "nota": "politriz de concreto · toda a área",            "qty": 100, "unit": "m²",      "preco_sugerido": 25  },
+        { "id": "piso_verniz",        "nome": "Verniz/selador para concreto",    "nota": "2 demãos · proteção e brilho do radier",        "qty": 6,   "unit": "lata 3,6L","preco_sugerido": 120 },
+        { "id": "piso_porcelanato",   "nome": "Porcelanato box banheiro",        "nota": "2 banheiros · box 90cm × altura 2,80m = ~11m²/banheiro", "qty": 22, "unit": "m²", "preco_sugerido": 0 },
+        { "id": "piso_argamassa",     "nome": "Argamassa colante (porcelanato)", "nota": "ACIII · rendimento ~4kg/m²",                   "qty": 6,   "unit": "sc 20kg", "preco_sugerido": 35  },
+        { "id": "piso_rejunte",       "nome": "Rejunte",                         "nota": "box dos banheiros",                             "qty": 4,   "unit": "kg",      "preco_sugerido": 18  }
+      ]
+    },
+    {
+      "id": "esquadrias",
+      "num": 6,
+      "nome": "Esquadrias",
+      "descricao": "6 portas · 12 janelas · defina material e preço",
+      "items": [
+        { "id": "esq_porta_int",      "nome": "Porta interna (0,91×2,10m)",      "nota": "5 unidades internas",                           "qty": 5,  "unit": "un",      "preco_sugerido": 0,  "opcoes_material": ["madeira maciça","madeira oca","MDF","metálica"] },
+        { "id": "esq_porta_ext",      "nome": "Porta entrada (0,91×2,13m)",      "nota": "1 porta de entrada",                            "qty": 1,  "unit": "un",      "preco_sugerido": 0,  "opcoes_material": ["madeira maciça","metálica","pivotante","alumínio"] },
+        { "id": "esq_jan_padrao",     "nome": "Janela padrão (1,20×1,20m)",      "nota": "11 unidades",                                   "qty": 11, "unit": "un",      "preco_sugerido": 0,  "opcoes_material": ["alumínio natural","alumínio cor","PVC","ferro"] },
+        { "id": "esq_jan_grande",     "nome": "Janela grande (2,10×2,15m)",      "nota": "1 unidade",                                     "qty": 1,  "unit": "un",      "preco_sugerido": 0,  "opcoes_material": ["alumínio natural","alumínio cor","PVC","vidro temperado"] },
+        { "id": "esq_ferragens",      "nome": "Ferragens (dobradiças, fechaduras)","nota": "kit por porta",                               "qty": 6,  "unit": "kit",     "preco_sugerido": 0   }
+      ]
+    },
+    {
+      "id": "servicos",
+      "num": 7,
+      "nome": "Serviços gerais",
+      "descricao": "locação, limpeza, equipamentos, imprevistos",
+      "items": [
+        { "id": "srv_locacao",        "nome": "Locação da obra",                 "nota": "gabarito, piquetes, referências de nível",      "qty": 1,  "unit": "vb",      "preco_sugerido": 300  },
+        { "id": "srv_betoneira",      "nome": "Aluguel betoneira",               "nota": "mês × duração estimada da obra",                "qty": 4,  "unit": "mês",     "preco_sugerido": 350  },
+        { "id": "srv_andaimes",       "nome": "Andaimes e equipamentos",         "nota": "aluguel andaimes tubulares",                    "qty": 1,  "unit": "vb",      "preco_sugerido": 1200 },
+        { "id": "srv_limpeza",        "nome": "Limpeza final da obra",           "nota": "descarte entulho + limpeza",                    "qty": 1,  "unit": "vb",      "preco_sugerido": 600  },
+        { "id": "srv_imprevistos",    "nome": "Imprevistos (reserva técnica)",   "nota": "~5% do total de materiais",                     "qty": 1,  "unit": "vb",      "preco_sugerido": 2000 }
+      ]
+    },
+    {
+      "id": "mdo",
+      "num": 8,
+      "nome": "Mão de obra",
+      "descricao": "empreitadas por etapa · preencha conforme seus orçamentos",
+      "items": [
+        { "id": "mdo_radier",         "nome": "Fundação / radier",               "nota": "nivelamento, armação, concretagem",             "qty": 1,   "unit": "vb",      "preco_sugerido": 0 },
+        { "id": "mdo_alvenaria",      "nome": "Alvenaria estrutural",            "nota": "levantamento dos blocos + grauteamento",        "qty": 200, "unit": "m²",      "preco_sugerido": 0 },
+        { "id": "mdo_cobertura",      "nome": "Cobertura",                       "nota": "montagem estrutura metálica + telha sanduíche", "qty": 125, "unit": "m²",      "preco_sugerido": 0 },
+        { "id": "mdo_reboco",         "nome": "Reboco e acabamento de paredes",  "nota": "chapisco, reboco, massa e pintura",             "qty": 350, "unit": "m²",      "preco_sugerido": 0 },
+        { "id": "mdo_polimento",      "nome": "Polimento do radier",             "nota": "politriz + verniz",                             "qty": 100, "unit": "m²",      "preco_sugerido": 0 },
+        { "id": "mdo_porcelanato",    "nome": "Assentamento porcelanato (box)",  "nota": "2 banheiros · ~22m²",                          "qty": 22,  "unit": "m²",      "preco_sugerido": 0 },
+        { "id": "mdo_esquadrias",     "nome": "Instalação de esquadrias",        "nota": "portas e janelas",                              "qty": 18,  "unit": "un",      "preco_sugerido": 0 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotação de Obra — Casa Iperó</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F5F3EE; --bg-card: #fff; --bg-input: #F9F8F5;
+  --text: #1A1915; --text-muted: #706E67; --text-hint: #A8A59E;
+  --border: #E2DFD8; --border-focus: #1A1915;
+  --accent: #2D5A27; --accent-light: #EAF3DE; --accent-text: #3B6D11;
+  --warn: #BA7517; --warn-bg: #FAEEDA;
+  --radius: 10px; --radius-sm: 6px;
+  --mono: 'DM Mono', monospace; --sans: 'Syne', sans-serif;
+}
+body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* HEADER */
+header {
+  background: var(--text); color: #F5F3EE;
+  padding: 2rem 3rem;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+header .meta { font-size: 0.75rem; color: #A8A59E; font-family: var(--mono); margin-top: 4px; }
+.header-right { display: flex; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
+.total-header { text-align: right; }
+.total-header label { font-size: 0.72rem; color: #A8A59E; display: block; margin-bottom: 4px; font-family: var(--mono); }
+.total-header span { font-family: var(--mono); font-size: 2rem; font-weight: 500; color: #C0DD97; }
+.header-actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  border-radius: var(--radius-sm); padding: 0.45rem 0.9rem;
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
+  cursor: pointer; border: 1.5px solid; transition: all 0.15s; white-space: nowrap;
+}
+.btn-save   { background: #C0DD97; border-color: #C0DD97; color: #173404; }
+.btn-save:hover { background: #97C459; border-color: #97C459; }
+.btn-export { background: transparent; border-color: #706E67; color: #F5F3EE; }
+.btn-export:hover { background: #706E67; }
+.btn-import { background: transparent; border-color: #706E67; color: #F5F3EE; }
+.btn-import:hover { background: #706E67; }
+.btn-print  { background: transparent; border-color: #706E67; color: #F5F3EE; }
+.btn-print:hover { background: #706E67; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: var(--text); color: #C0DD97;
+  font-family: var(--mono); font-size: 0.8rem;
+  padding: 0.7rem 1.2rem; border-radius: var(--radius-sm);
+  opacity: 0; transform: translateY(8px);
+  transition: all 0.2s; pointer-events: none; z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* CONTAINER */
+.container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+/* INFO STRIP */
+.info-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 2.5rem; }
+.info-card { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; }
+.info-card label { font-size: 0.68rem; color: var(--text-muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
+.info-card span { font-size: 1.3rem; font-weight: 700; }
+.info-card small { font-size: 0.72rem; color: var(--text-hint); font-family: var(--mono); }
+
+/* SECTION */
+.section { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: var(--radius); margin-bottom: 1.5rem; overflow: hidden; }
+.section-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 0.5px solid var(--border); cursor: pointer; user-select: none; }
+.section-header:hover { background: var(--bg); }
+.section-title { display: flex; align-items: center; gap: 12px; }
+.section-num { width: 28px; height: 28px; background: var(--text); color: #F5F3EE; border-radius: 50%; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: var(--mono); flex-shrink: 0; }
+.section-name { font-size: 1rem; font-weight: 700; }
+.section-sub { font-size: 0.72rem; color: var(--text-muted); font-family: var(--mono); margin-top: 2px; }
+.section-right { display: flex; align-items: center; gap: 16px; }
+.section-total { font-family: var(--mono); font-size: 1.1rem; font-weight: 500; color: var(--accent); }
+.chevron { transition: transform 0.2s; color: var(--text-hint); font-size: 1rem; }
+.collapsed .section-body { display: none; }
+.collapsed .chevron { transform: rotate(-90deg); }
+
+/* TABLE ROWS */
+.item-row { display: grid; grid-template-columns: 2fr 1fr 1.2fr 1fr 1fr; gap: 0; align-items: center; border-bottom: 0.5px solid var(--border); padding: 0.75rem 1.5rem; transition: background 0.1s; }
+.item-row:last-child { border-bottom: none; }
+.item-row:hover { background: var(--bg); }
+.header-row { background: var(--bg); padding: 0.5rem 1.5rem; }
+.header-row span { font-size: 0.66rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-hint); font-weight: 500; }
+.item-name { font-size: 0.9rem; font-weight: 500; }
+.item-note { font-size: 0.7rem; color: var(--text-muted); font-family: var(--mono); margin-top: 2px; }
+.qty-cell { font-family: var(--mono); font-size: 0.85rem; color: var(--text-muted); }
+.price-input { display: flex; align-items: center; gap: 4px; background: var(--bg-input); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 4px 8px; transition: border-color 0.15s; }
+.price-input:focus-within { border-color: var(--border-focus); background: var(--bg-card); }
+.price-input .cur { font-size: 0.72rem; color: var(--text-hint); font-family: var(--mono); flex-shrink: 0; }
+.price-input input { background: none; border: none; outline: none; font-family: var(--mono); font-size: 0.85rem; color: var(--text); width: 100%; min-width: 0; }
+.item-total { font-family: var(--mono); font-size: 0.9rem; font-weight: 500; text-align: right; }
+.item-unit { font-family: var(--mono); font-size: 0.78rem; color: var(--text-hint); }
+.note-row { padding: 0.5rem 1.5rem 0.75rem; background: var(--warn-bg); border-bottom: 0.5px solid var(--border); }
+.note-row p { font-size: 0.76rem; color: var(--warn); font-family: var(--mono); }
+.subtotal-row { display: flex; justify-content: flex-end; align-items: center; gap: 1rem; padding: 0.75rem 1.5rem; background: var(--accent-light); border-top: 0.5px solid var(--border); }
+.subtotal-row label { font-size: 0.72rem; color: var(--accent-text); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; }
+.subtotal-row span { font-family: var(--mono); font-size: 1.1rem; font-weight: 500; color: var(--accent); }
+
+/* SELECT */
+.mat-select { background: var(--bg-input); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 3px 6px; font-family: var(--mono); font-size: 0.72rem; color: var(--text); cursor: pointer; outline: none; max-width: 160px; }
+.mat-select:focus { border-color: var(--border-focus); }
+
+/* TOTAL FINAL */
+.total-final { background: var(--text); color: #F5F3EE; border-radius: var(--radius); padding: 2rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.total-final h2 { font-size: 0.9rem; font-weight: 500; color: #A8A59E; font-family: var(--mono); }
+.total-final .valor { font-size: 2.5rem; font-weight: 700; font-family: var(--mono); color: #C0DD97; margin-top: 4px; }
+.total-final .custo-m2 { font-size: 0.78rem; color: #706E67; font-family: var(--mono); margin-top: 8px; }
+.breakdown { text-align: right; }
+.breakdown div { font-size: 0.78rem; font-family: var(--mono); color: #706E67; margin-bottom: 4px; }
+.breakdown div span { color: #F5F3EE; }
+
+/* UNSAVED */
+.unsaved-dot { display: inline-block; width: 8px; height: 8px; background: #EF9F27; border-radius: 50%; margin-left: 6px; vertical-align: middle; opacity: 0; transition: opacity 0.2s; }
+.unsaved-dot.visible { opacity: 1; }
+
+@media print {
+  header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .header-actions, .toast { display: none; }
+  body { background: white; }
+}
+@media (max-width: 700px) {
+  header { padding: 1.5rem; }
+  .container { padding: 1.5rem 1rem; }
+  .item-row { grid-template-columns: 1.5fr 0.6fr 1.1fr 0.6fr 0.8fr; padding: 0.6rem 1rem; }
+  .total-final { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Cotação de obra <span class="unsaved-dot" id="unsaved-dot"></span></h1>
+    <div class="meta" id="header-meta">carregando...</div>
+  </div>
+  <div class="header-right">
+    <div class="total-header">
+      <label>total estimado</label>
+      <span id="grand-total-header">R$ 0</span>
+    </div>
+    <div class="header-actions">
+      <div class="btn-row">
+        <button class="btn btn-save" onclick="saveData()">💾 Salvar</button>
+        <button class="btn btn-export" onclick="exportJSON()">⬇ Exportar preços</button>
+        <button class="btn btn-import" onclick="document.getElementById('import-input').click()">⬆ Importar preços</button>
+        <button class="btn btn-print" onclick="window.print()">⎙ Imprimir</button>
+      </div>
+      <input type="file" id="import-input" accept=".json" style="display:none" onchange="importJSON(event)">
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="info-strip" id="info-strip"></div>
+  <div id="sections-container"></div>
+  <div class="total-final">
+    <div>
+      <h2>total geral estimado</h2>
+      <div class="valor" id="grand-total">R$ 0</div>
+      <div class="custo-m2" id="custo-m2">R$ 0 / m²</div>
+    </div>
+    <div class="breakdown" id="breakdown"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'cotacao_casa_ipero_prices';
+let DATA = null;
+let prices = {};
+let dirty = false;
+
+const fmt = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+
+// ── LOAD DATA ──────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('data.json');
+    DATA = await res.json();
+  } catch(e) {
+    showToast('Erro ao carregar data.json');
+    return;
+  }
+
+  // Load saved prices from localStorage
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try { prices = JSON.parse(saved); } catch(e) { prices = {}; }
+  }
+
+  renderMeta();
+  renderInfoStrip();
+  renderSections();
+  recalc();
+}
+
+// ── RENDER META ────────────────────────────────────────────
+function renderMeta() {
+  const m = DATA._meta;
+  document.getElementById('header-meta').textContent =
+    m.projeto + ' · ' + m.modelo_revit + ' · atualizado ' + m.ultima_atualizacao;
+}
+
+// ── RENDER INFO STRIP ──────────────────────────────────────
+function renderInfoStrip() {
+  const m = DATA._meta;
+  const strip = document.getElementById('info-strip');
+  const cards = [
+    { label: 'Área do radier',    value: '~' + m.area_piso_m2 + ' m²', small: 'piso da casa' },
+    { label: 'Área de telhado',   value: '~125 m²',                    small: 'sanduíche PU 40mm' },
+    { label: 'Paredes (comp.)',   value: '86,2 m',                     small: 'bloco 14×19×39' },
+    { label: 'Pé-direito',        value: '2,80 m',                     small: 'alvenaria estrutural' },
+    { label: 'Portas',            value: '6 un',                       small: 'a definir material' },
+    { label: 'Janelas',           value: '12 un',                      small: '1 maior + 11 padrão' },
+  ];
+  strip.innerHTML = cards.map(c => `
+    <div class="info-card">
+      <label>${c.label}</label>
+      <span>${c.value}</span>
+      <small>${c.small}</small>
+    </div>`).join('');
+}
+
+// ── RENDER SECTIONS ────────────────────────────────────────
+function renderSections() {
+  const container = document.getElementById('sections-container');
+  container.innerHTML = DATA.sections.map(sec => renderSection(sec)).join('');
+}
+
+function renderSection(sec) {
+  const aviso = sec.aviso
+    ? `<div class="note-row"><p>⚠ ${sec.aviso}</p></div>` : '';
+
+  const rows = sec.items.map((item, i) => {
+    const savedPrice = prices[item.id] !== undefined ? prices[item.id] : item.preco_sugerido;
+    const savedMat   = prices[item.id + '_mat'] || (item.opcoes_material ? item.opcoes_material[0] : '');
+
+    const matSelect = item.opcoes_material
+      ? `<select class="mat-select" data-item-id="${item.id}" onchange="saveMatOption(this)">${
+          item.opcoes_material.map(o => `<option${o === savedMat ? ' selected' : ''}>${o}</option>`).join('')
+        }</select>` : '';
+
+    return `
+    <div class="item-row">
+      <div>
+        <div class="item-name">${item.nome}</div>
+        <div class="item-note">${item.nota}${matSelect ? '<br>' + matSelect : ''}</div>
+      </div>
+      <div class="qty-cell">${item.qty}</div>
+      <div class="price-input">
+        <span class="cur">R$</span>
+        <input type="number" min="0" step="any"
+          data-item-id="${item.id}"
+          data-qty="${item.qty}"
+          data-sec-id="${sec.id}"
+          value="${savedPrice}"
+          oninput="onPriceChange(this)">
+      </div>
+      <div class="item-unit">${item.unit}</div>
+      <div class="item-total" id="total-${item.id}">${fmt(savedPrice * item.qty)}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="section" id="sec-${sec.id}">
+    <div class="section-header" onclick="toggleSection('sec-${sec.id}')">
+      <div class="section-title">
+        <div class="section-num">${sec.num}</div>
+        <div>
+          <div class="section-name">${sec.nome}</div>
+          <div class="section-sub">${sec.descricao}</div>
+        </div>
+      </div>
+      <div class="section-right">
+        <span class="section-total" id="subtotal-${sec.id}">${fmt(calcSectionTotal(sec))}</span>
+        <span class="chevron">▾</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="item-row header-row">
+        <span>item</span><span>qtd</span><span>preço unit.</span><span>unid.</span><span style="text-align:right">total</span>
+      </div>
+      ${aviso}
+      ${rows}
+      <div class="subtotal-row">
+        <label>subtotal ${sec.nome.toLowerCase()}</label>
+        <span id="sub-${sec.id}">${fmt(calcSectionTotal(sec))}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function calcSectionTotal(sec) {
+  return sec.items.reduce((acc, item) => {
+    const p = prices[item.id] !== undefined ? prices[item.id] : item.preco_sugerido;
+    return acc + (parseFloat(p) || 0) * item.qty;
+  }, 0);
+}
+
+// ── INTERACTIONS ───────────────────────────────────────────
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+
+function onPriceChange(input) {
+  const id = input.dataset.itemId;
+  const qty = parseFloat(input.dataset.qty) || 0;
+  const val = parseFloat(input.value) || 0;
+  prices[id] = val;
+  document.getElementById('total-' + id).textContent = fmt(val * qty);
+  markDirty();
+  recalc();
+}
+
+function saveMatOption(select) {
+  prices[select.dataset.itemId + '_mat'] = select.value;
+  markDirty();
+}
+
+function markDirty() {
+  dirty = true;
+  document.getElementById('unsaved-dot').classList.add('visible');
+}
+
+// ── RECALC ─────────────────────────────────────────────────
+function recalc() {
+  let grand = 0;
+  const breakdown = [];
+
+  DATA.sections.forEach(sec => {
+    const total = calcSectionTotal(sec);
+    grand += total;
+    const subEl = document.getElementById('sub-' + sec.id);
+    const stEl  = document.getElementById('subtotal-' + sec.id);
+    if (subEl) subEl.textContent = fmt(total);
+    if (stEl)  stEl.textContent  = fmt(total);
+    breakdown.push({ nome: sec.nome, val: total });
+  });
+
+  document.getElementById('grand-total').textContent = fmt(grand);
+  document.getElementById('grand-total-header').textContent = fmt(grand);
+  const areaPiso = DATA._meta.area_piso_m2 || 100;
+  document.getElementById('custo-m2').textContent = fmt(grand / areaPiso) + ' / m² (base ' + areaPiso + ' m²)';
+
+  document.getElementById('breakdown').innerHTML = breakdown.map(b =>
+    `<div>${b.nome}: <span>${fmt(b.val)}</span></div>`
+  ).join('');
+}
+
+// ── SAVE / EXPORT / IMPORT ─────────────────────────────────
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(prices));
+  dirty = false;
+  document.getElementById('unsaved-dot').classList.remove('visible');
+  showToast('Preços salvos com sucesso ✓');
+}
+
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(prices, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'prices.json'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('prices.json exportado ✓');
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      prices = JSON.parse(e.target.result);
+      renderSections();
+      recalc();
+      markDirty();
+      showToast('Preços importados — clique em Salvar ✓');
+    } catch(err) {
+      showToast('Erro ao importar JSON');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Aviso ao sair sem salvar
+window.addEventListener('beforeunload', e => {
+  if (dirty) { e.preventDefault(); e.returnValue = ''; }
+});
+
+init();
+</script>
+</body>
+</html>
