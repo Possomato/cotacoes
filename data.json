@@ -6,6 +6,103 @@
     "area_piso_m2": 100,
     "notas": "Quantitativos extraídos diretamente do modelo Revit via MCP"
   },
+  "abas": [
+    { "id": "casa",    "label": "Casa" },
+    { "id": "garagem", "label": "Garagem" }
+  ],
+  "garagem": [
+    {
+      "id": "g_terraplenagem",
+      "num": 1,
+      "nome": "Terraplenagem e contenção",
+      "descricao": "escavação + aterro compactado para nível da garagem",
+      "aviso": "Garagem semienterrada — verificar cota de projeto para definir volume de escavação real",
+      "items": [
+        { "id": "g_escavacao",      "nome": "Escavação manual/mecânica",       "nota": "estimativa ~30m³ para rebaixo da garagem",        "qty": 30,  "unit": "m³",    "preco_sugerido": 80  },
+        { "id": "g_aterro",         "nome": "Aterro compactado",               "nota": "reaterro lateral após muros",                     "qty": 10,  "unit": "m³",    "preco_sugerido": 60  },
+        { "id": "g_brita_dreno",    "nome": "Brita drenante (dreno atrás do muro)", "nota": "camada filtrante atrás dos muros de arrimo", "qty": 4,   "unit": "m³",    "preco_sugerido": 130 },
+        { "id": "g_manta_dreno",    "nome": "Manta geotêxtil",                 "nota": "filtro entre brita e solo",                       "qty": 25,  "unit": "m²",    "preco_sugerido": 12  },
+        { "id": "g_tubo_dreno",     "nome": "Tubo dreno Ø100mm",               "nota": "escoamento da água infiltrada atrás do muro",     "qty": 12,  "unit": "m",     "preco_sugerido": 25  }
+      ]
+    },
+    {
+      "id": "g_muro_arrimo",
+      "num": 2,
+      "nome": "Muros de arrimo",
+      "descricao": "2 paredes 140mm · comp total 9,76m · altura 1,20m · concreto armado",
+      "aviso": "Muros de arrimo exigem concreto armado (não alvenaria simples) — considerar fck 25 MPa + CA-50",
+      "items": [
+        { "id": "g_muro_concreto",  "nome": "Concreto fck 25 MPa (muros)",     "nota": "vol. total muros ~1,64m³ + perdas → ~2m³",       "qty": 2,   "unit": "m³",    "preco_sugerido": 450 },
+        { "id": "g_muro_aco",       "nome": "Aço CA-50 (armação dos muros)",   "nota": "~80kg/m³ de concreto → ~160kg",                  "qty": 160, "unit": "kg",    "preco_sugerido": 12  },
+        { "id": "g_muro_forma",     "nome": "Forma de madeira (muros)",        "nota": "2 faces · área total ~23m² de forma",            "qty": 23,  "unit": "m²",    "preco_sugerido": 55  },
+        { "id": "g_muro_impermeab", "nome": "Impermeabilização dos muros",     "nota": "face enterrada · argamassa + manta · ~12m²",     "qty": 12,  "unit": "m²",    "preco_sugerido": 45  },
+        { "id": "g_muro_mata_jun",  "nome": "Mata-junta / junta de dilatação", "nota": "entre muro e laje",                              "qty": 10,  "unit": "m",     "preco_sugerido": 18  }
+      ]
+    },
+    {
+      "id": "g_piso",
+      "num": 3,
+      "nome": "Piso da garagem",
+      "descricao": "laje de concreto desempenada · ~57 m²",
+      "items": [
+        { "id": "g_piso_brita",     "nome": "Brita + areia (base)",            "nota": "colchão 10cm sob a laje",                        "qty": 6,   "unit": "m³",    "preco_sugerido": 130 },
+        { "id": "g_piso_concreto",  "nome": "Concreto fck 25 MPa (laje piso)", "nota": "laje 10cm · 57m² → ~5,7m³ + 10% perdas",        "qty": 6.3, "unit": "m³",    "preco_sugerido": 450 },
+        { "id": "g_piso_aco",       "nome": "Malha de aço Q-131",              "nota": "armação da laje · 57m²",                         "qty": 57,  "unit": "m²",    "preco_sugerido": 18  },
+        { "id": "g_piso_desempenadeira", "nome": "Desempeno mecânico (helicóptero)", "nota": "acabamento superficial do concreto",       "qty": 57,  "unit": "m²",    "preco_sugerido": 8   },
+        { "id": "g_piso_impermeab", "nome": "Impermeabilização do piso",       "nota": "selador acrílico ou epóxi · 57m²",               "qty": 57,  "unit": "m²",    "preco_sugerido": 22  }
+      ]
+    },
+    {
+      "id": "g_caminho",
+      "num": 4,
+      "nome": "Caminho de acesso — concreto 350mm",
+      "descricao": "rampa/caminho de acesso à garagem · ~10 m² · concreto 350mm",
+      "items": [
+        { "id": "g_cam_brita",      "nome": "Brita e areia (base da rampa)",   "nota": "colchão 15cm compactado",                        "qty": 2,   "unit": "m³",    "preco_sugerido": 130 },
+        { "id": "g_cam_concreto",   "nome": "Concreto fck 25 MPa (rampa)",     "nota": "350mm · 10m² → 3,5m³",                          "qty": 3.5, "unit": "m³",    "preco_sugerido": 450 },
+        { "id": "g_cam_aco",        "nome": "Aço CA-50 (armação rampa)",       "nota": "rampa sob tráfego leve",                         "qty": 60,  "unit": "kg",    "preco_sugerido": 12  },
+        { "id": "g_cam_forma",      "nome": "Forma lateral (bordas da rampa)", "nota": "contenção lateral do concreto",                  "qty": 8,   "unit": "m",     "preco_sugerido": 25  },
+        { "id": "g_cam_textura",    "nome": "Textura antiderrapante",          "nota": "vassoura ou friso na rampa",                     "qty": 10,  "unit": "m²",    "preco_sugerido": 15  }
+      ]
+    },
+    {
+      "id": "g_cobertura",
+      "num": 5,
+      "nome": "Cobertura da garagem",
+      "descricao": "laje maciça ou telha — definir com projeto estrutural",
+      "aviso": "Tipo de cobertura depende do projeto — se for laje, ela serve de terraço; se for telha, adicionar estrutura de madeira ou metálica",
+      "items": [
+        { "id": "g_cob_telha",      "nome": "Telha sanduíche PU 40mm",         "nota": "opção econômica · ~60m² (inclui beirais)",       "qty": 60,  "unit": "m²",    "preco_sugerido": 130 },
+        { "id": "g_cob_estrutura",  "nome": "Estrutura metálica (terças)",     "nota": "apoio da telha sobre os muros",                  "qty": 80,  "unit": "kg",    "preco_sugerido": 28  },
+        { "id": "g_cob_calha",      "nome": "Calha e rufos",                   "nota": "perimetral",                                     "qty": 20,  "unit": "m",     "preco_sugerido": 55  }
+      ]
+    },
+    {
+      "id": "g_porta",
+      "num": 6,
+      "nome": "Portão e acabamentos",
+      "descricao": "portão de acesso + pintura dos muros",
+      "items": [
+        { "id": "g_portao",         "nome": "Portão de garagem",               "nota": "basculante, de correr ou seccional",             "qty": 1,   "unit": "un",    "preco_sugerido": 0,  "opcoes_material": ["basculante aço","correr aço","seccional","automático"] },
+        { "id": "g_reboco_muro",    "nome": "Reboco dos muros (face interna)", "nota": "face interna dos muros de arrimo · ~12m²",       "qty": 12,  "unit": "m²",    "preco_sugerido": 18  },
+        { "id": "g_tinta_muro",     "nome": "Tinta borracha (face externa)",   "nota": "impermeabilização complementar face exposta",    "qty": 12,  "unit": "m²",    "preco_sugerido": 22  }
+      ]
+    },
+    {
+      "id": "g_mdo",
+      "num": 7,
+      "nome": "Mão de obra — garagem",
+      "descricao": "empreitadas por etapa",
+      "items": [
+        { "id": "g_mdo_terra",      "nome": "Terraplenagem e dreno",           "nota": "escavação + aterro + dreno",                     "qty": 1,   "unit": "vb",    "preco_sugerido": 0 },
+        { "id": "g_mdo_muro",       "nome": "Muros de arrimo",                 "nota": "forma, armação e concretagem",                   "qty": 1,   "unit": "vb",    "preco_sugerido": 0 },
+        { "id": "g_mdo_piso",       "nome": "Piso de concreto",                "nota": "base, concretagem e desempeno",                  "qty": 57,  "unit": "m²",    "preco_sugerido": 0 },
+        { "id": "g_mdo_rampa",      "nome": "Rampa / caminho de acesso",       "nota": "forma, armação e concretagem",                   "qty": 1,   "unit": "vb",    "preco_sugerido": 0 },
+        { "id": "g_mdo_cobertura",  "nome": "Cobertura",                       "nota": "montagem estrutura + telha",                     "qty": 60,  "unit": "m²",    "preco_sugerido": 0 },
+        { "id": "g_mdo_acabamento", "nome": "Acabamentos e portão",            "nota": "reboco, tinta, instalação portão",               "qty": 1,   "unit": "vb",    "preco_sugerido": 0 }
+      ]
+    }
+  ],
   "sections": [
     {
       "id": "radier",

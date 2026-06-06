@@ -21,12 +21,7 @@
 body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
 
 /* HEADER */
-header {
-  background: var(--text); color: #F5F3EE;
-  padding: 2rem 3rem;
-  display: flex; align-items: flex-end; justify-content: space-between;
-  flex-wrap: wrap; gap: 1rem;
-}
+header { background: var(--text); color: #F5F3EE; padding: 2rem 3rem; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
 header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
 header .meta { font-size: 0.75rem; color: #A8A59E; font-family: var(--mono); margin-top: 4px; }
 .header-right { display: flex; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
@@ -36,12 +31,7 @@ header .meta { font-size: 0.75rem; color: #A8A59E; font-family: var(--mono); mar
 .header-actions { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
 
 /* BUTTONS */
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  border-radius: var(--radius-sm); padding: 0.45rem 0.9rem;
-  font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
-  cursor: pointer; border: 1.5px solid; transition: all 0.15s; white-space: nowrap;
-}
+.btn { display: inline-flex; align-items: center; gap: 6px; border-radius: var(--radius-sm); padding: 0.45rem 0.9rem; font-family: var(--sans); font-size: 0.8rem; font-weight: 500; cursor: pointer; border: 1.5px solid; transition: all 0.15s; white-space: nowrap; }
 .btn-save   { background: #C0DD97; border-color: #C0DD97; color: #173404; }
 .btn-save:hover { background: #97C459; border-color: #97C459; }
 .btn-export { background: transparent; border-color: #706E67; color: #F5F3EE; }
@@ -53,18 +43,21 @@ header .meta { font-size: 0.75rem; color: #A8A59E; font-family: var(--mono); mar
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
 /* TOAST */
-.toast {
-  position: fixed; bottom: 2rem; right: 2rem;
-  background: var(--text); color: #C0DD97;
-  font-family: var(--mono); font-size: 0.8rem;
-  padding: 0.7rem 1.2rem; border-radius: var(--radius-sm);
-  opacity: 0; transform: translateY(8px);
-  transition: all 0.2s; pointer-events: none; z-index: 999;
-}
+.toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--text); color: #C0DD97; font-family: var(--mono); font-size: 0.8rem; padding: 0.7rem 1.2rem; border-radius: var(--radius-sm); opacity: 0; transform: translateY(8px); transition: all 0.2s; pointer-events: none; z-index: 999; }
 .toast.show { opacity: 1; transform: translateY(0); }
+
+/* TABS */
+.tabs-bar { background: var(--bg-card); border-bottom: 0.5px solid var(--border); padding: 0 2rem; display: flex; gap: 0; }
+.tab-btn { font-family: var(--sans); font-size: 0.9rem; font-weight: 500; padding: 1rem 1.5rem; background: none; border: none; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -0.5px; transition: all 0.15s; display: flex; align-items: center; gap: 8px; }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--text); }
+.tab-total { font-family: var(--mono); font-size: 0.72rem; background: var(--accent-light); color: var(--accent-text); padding: 2px 8px; border-radius: 20px; }
+.tab-btn.active .tab-total { background: var(--text); color: #C0DD97; }
 
 /* CONTAINER */
 .container { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 
 /* INFO STRIP */
 .info-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 2.5rem; }
@@ -125,9 +118,17 @@ header .meta { font-size: 0.75rem; color: #A8A59E; font-family: var(--mono); mar
 .unsaved-dot { display: inline-block; width: 8px; height: 8px; background: #EF9F27; border-radius: 50%; margin-left: 6px; vertical-align: middle; opacity: 0; transition: opacity 0.2s; }
 .unsaved-dot.visible { opacity: 1; }
 
+/* GERAL TOTAL */
+.geral-total { background: var(--bg-card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.5rem 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.geral-total label { font-size: 0.72rem; color: var(--text-muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+.geral-total span { font-family: var(--mono); font-size: 1.4rem; font-weight: 700; color: var(--text); }
+.geral-total .geral-itens { display: flex; gap: 2rem; flex-wrap: wrap; }
+.geral-total .geral-item { text-align: right; }
+
 @media print {
   header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .header-actions, .toast { display: none; }
+  .header-actions, .toast, .tabs-bar { display: none; }
+  .tab-panel { display: block !important; }
   body { background: white; }
 }
 @media (max-width: 700px) {
@@ -147,7 +148,7 @@ header .meta { font-size: 0.75rem; color: #A8A59E; font-family: var(--mono); mar
   </div>
   <div class="header-right">
     <div class="total-header">
-      <label>total estimado</label>
+      <label>total obra completa</label>
       <span id="grand-total-header">R$ 0</span>
     </div>
     <div class="header-actions">
@@ -162,17 +163,10 @@ header .meta { font-size: 0.75rem; color: #A8A59E; font-family: var(--mono); mar
   </div>
 </header>
 
+<nav class="tabs-bar" id="tabs-bar"></nav>
+
 <div class="container">
-  <div class="info-strip" id="info-strip"></div>
-  <div id="sections-container"></div>
-  <div class="total-final">
-    <div>
-      <h2>total geral estimado</h2>
-      <div class="valor" id="grand-total">R$ 0</div>
-      <div class="custo-m2" id="custo-m2">R$ 0 / m²</div>
-    </div>
-    <div class="breakdown" id="breakdown"></div>
-  </div>
+  <div id="tab-panels"></div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -182,77 +176,105 @@ const STORAGE_KEY = 'cotacao_casa_ipero_prices';
 let DATA = null;
 let prices = {};
 let dirty = false;
+let activeTab = 'casa';
 
 const fmt = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
 
-// ── LOAD DATA ──────────────────────────────────────────────
 async function init() {
   try {
     const res = await fetch('data.json');
     DATA = await res.json();
   } catch(e) {
-    showToast('Erro ao carregar data.json');
+    document.getElementById('header-meta').textContent = 'Erro ao carregar data.json';
     return;
   }
-
-  // Load saved prices from localStorage
   const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    try { prices = JSON.parse(saved); } catch(e) { prices = {}; }
-  }
+  if (saved) { try { prices = JSON.parse(saved); } catch(e) { prices = {}; } }
 
   renderMeta();
-  renderInfoStrip();
-  renderSections();
-  recalc();
+  renderTabs();
+  renderPanels();
+  recalcAll();
 }
 
-// ── RENDER META ────────────────────────────────────────────
 function renderMeta() {
   const m = DATA._meta;
   document.getElementById('header-meta').textContent =
     m.projeto + ' · ' + m.modelo_revit + ' · atualizado ' + m.ultima_atualizacao;
 }
 
-// ── RENDER INFO STRIP ──────────────────────────────────────
+// ── TABS ───────────────────────────────────────────────────
+function renderTabs() {
+  const bar = document.getElementById('tabs-bar');
+  bar.innerHTML = DATA.abas.map(aba => `
+    <button class="tab-btn ${aba.id === activeTab ? 'active' : ''}" onclick="switchTab('${aba.id}')" id="tab-btn-${aba.id}">
+      ${aba.label}
+      <span class="tab-total" id="tab-total-${aba.id}">R$ 0</span>
+    </button>`).join('');
+}
+
+function switchTab(id) {
+  activeTab = id;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-btn-' + id).classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+}
+
+// ── PANELS ─────────────────────────────────────────────────
+function renderPanels() {
+  const container = document.getElementById('tab-panels');
+  container.innerHTML = DATA.abas.map(aba => {
+    const sections = aba.id === 'casa' ? DATA.sections : DATA[aba.id];
+    return `
+    <div class="tab-panel ${aba.id === activeTab ? 'active' : ''}" id="panel-${aba.id}">
+      ${aba.id === 'casa' ? renderInfoStrip() : renderGaragemStrip()}
+      ${sections.map(sec => renderSection(sec)).join('')}
+      <div class="total-final">
+        <div>
+          <h2>total ${aba.label.toLowerCase()}</h2>
+          <div class="valor" id="grand-total-${aba.id}">R$ 0</div>
+          <div class="custo-m2" id="custo-m2-${aba.id}"></div>
+        </div>
+        <div class="breakdown" id="breakdown-${aba.id}"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 function renderInfoStrip() {
-  const m = DATA._meta;
-  const strip = document.getElementById('info-strip');
   const cards = [
-    { label: 'Área do radier',    value: '~' + m.area_piso_m2 + ' m²', small: 'piso da casa' },
-    { label: 'Área de telhado',   value: '~125 m²',                    small: 'sanduíche PU 40mm' },
-    { label: 'Paredes (comp.)',   value: '86,2 m',                     small: 'bloco 14×19×39' },
-    { label: 'Pé-direito',        value: '2,80 m',                     small: 'alvenaria estrutural' },
-    { label: 'Portas',            value: '6 un',                       small: 'a definir material' },
-    { label: 'Janelas',           value: '12 un',                      small: '1 maior + 11 padrão' },
+    { label: 'Área do radier',  value: '~100 m²', small: 'piso da casa' },
+    { label: 'Área telhado',    value: '~125 m²', small: 'sanduíche PU 40mm' },
+    { label: 'Paredes (comp.)', value: '86,2 m',  small: 'bloco 14×19×39' },
+    { label: 'Pé-direito',      value: '2,80 m',  small: 'alvenaria estrutural' },
+    { label: 'Portas',          value: '6 un',    small: 'a definir material' },
+    { label: 'Janelas',         value: '12 un',   small: '1 maior + 11 padrão' },
   ];
-  strip.innerHTML = cards.map(c => `
-    <div class="info-card">
-      <label>${c.label}</label>
-      <span>${c.value}</span>
-      <small>${c.small}</small>
-    </div>`).join('');
+  return '<div class="info-strip">' + cards.map(c => `
+    <div class="info-card"><label>${c.label}</label><span>${c.value}</span><small>${c.small}</small></div>`).join('') + '</div>';
 }
 
-// ── RENDER SECTIONS ────────────────────────────────────────
-function renderSections() {
-  const container = document.getElementById('sections-container');
-  container.innerHTML = DATA.sections.map(sec => renderSection(sec)).join('');
+function renderGaragemStrip() {
+  const cards = [
+    { label: 'Área piso',       value: '~57 m²',  small: 'laje de concreto' },
+    { label: 'Muros de arrimo', value: '9,76 m',  small: 'concreto armado 140mm' },
+    { label: 'Altura muro',     value: '1,20 m',  small: 'face enterrada' },
+    { label: 'Caminho acesso',  value: '~10 m²',  small: 'concreto 350mm' },
+  ];
+  return '<div class="info-strip">' + cards.map(c => `
+    <div class="info-card"><label>${c.label}</label><span>${c.value}</span><small>${c.small}</small></div>`).join('') + '</div>';
 }
 
+// ── SECTION ────────────────────────────────────────────────
 function renderSection(sec) {
-  const aviso = sec.aviso
-    ? `<div class="note-row"><p>⚠ ${sec.aviso}</p></div>` : '';
-
-  const rows = sec.items.map((item, i) => {
+  const aviso = sec.aviso ? `<div class="note-row"><p>⚠ ${sec.aviso}</p></div>` : '';
+  const rows = sec.items.map(item => {
     const savedPrice = prices[item.id] !== undefined ? prices[item.id] : item.preco_sugerido;
     const savedMat   = prices[item.id + '_mat'] || (item.opcoes_material ? item.opcoes_material[0] : '');
-
-    const matSelect = item.opcoes_material
+    const matSelect  = item.opcoes_material
       ? `<select class="mat-select" data-item-id="${item.id}" onchange="saveMatOption(this)">${
-          item.opcoes_material.map(o => `<option${o === savedMat ? ' selected' : ''}>${o}</option>`).join('')
-        }</select>` : '';
-
+          item.opcoes_material.map(o => `<option${o === savedMat ? ' selected' : ''}>${o}</option>`).join('')}</select>` : '';
     return `
     <div class="item-row">
       <div>
@@ -262,15 +284,10 @@ function renderSection(sec) {
       <div class="qty-cell">${item.qty}</div>
       <div class="price-input">
         <span class="cur">R$</span>
-        <input type="number" min="0" step="any"
-          data-item-id="${item.id}"
-          data-qty="${item.qty}"
-          data-sec-id="${sec.id}"
-          value="${savedPrice}"
-          oninput="onPriceChange(this)">
+        <input type="number" min="0" step="any" data-item-id="${item.id}" data-qty="${item.qty}" value="${savedPrice}" oninput="onPriceChange(this)">
       </div>
       <div class="item-unit">${item.unit}</div>
-      <div class="item-total" id="total-${item.id}">${fmt(savedPrice * item.qty)}</div>
+      <div class="item-total" id="total-${item.id}">${fmt((parseFloat(savedPrice)||0) * item.qty)}</div>
     </div>`;
   }).join('');
 
@@ -293,8 +310,7 @@ function renderSection(sec) {
       <div class="item-row header-row">
         <span>item</span><span>qtd</span><span>preço unit.</span><span>unid.</span><span style="text-align:right">total</span>
       </div>
-      ${aviso}
-      ${rows}
+      ${aviso}${rows}
       <div class="subtotal-row">
         <label>subtotal ${sec.nome.toLowerCase()}</label>
         <span id="sub-${sec.id}">${fmt(calcSectionTotal(sec))}</span>
@@ -311,18 +327,16 @@ function calcSectionTotal(sec) {
 }
 
 // ── INTERACTIONS ───────────────────────────────────────────
-function toggleSection(id) {
-  document.getElementById(id).classList.toggle('collapsed');
-}
+function toggleSection(id) { document.getElementById(id).classList.toggle('collapsed'); }
 
 function onPriceChange(input) {
-  const id = input.dataset.itemId;
+  const id  = input.dataset.itemId;
   const qty = parseFloat(input.dataset.qty) || 0;
   const val = parseFloat(input.value) || 0;
   prices[id] = val;
   document.getElementById('total-' + id).textContent = fmt(val * qty);
   markDirty();
-  recalc();
+  recalcAll();
 }
 
 function saveMatOption(select) {
@@ -336,28 +350,46 @@ function markDirty() {
 }
 
 // ── RECALC ─────────────────────────────────────────────────
-function recalc() {
-  let grand = 0;
-  const breakdown = [];
+function recalcAll() {
+  let grandTotal = 0;
 
-  DATA.sections.forEach(sec => {
-    const total = calcSectionTotal(sec);
-    grand += total;
-    const subEl = document.getElementById('sub-' + sec.id);
-    const stEl  = document.getElementById('subtotal-' + sec.id);
-    if (subEl) subEl.textContent = fmt(total);
-    if (stEl)  stEl.textContent  = fmt(total);
-    breakdown.push({ nome: sec.nome, val: total });
+  DATA.abas.forEach(aba => {
+    const sections = aba.id === 'casa' ? DATA.sections : DATA[aba.id];
+    let abaTotal = 0;
+    const breakdown = [];
+
+    sections.forEach(sec => {
+      const total = calcSectionTotal(sec);
+      abaTotal += total;
+      const subEl = document.getElementById('sub-' + sec.id);
+      const stEl  = document.getElementById('subtotal-' + sec.id);
+      if (subEl) subEl.textContent = fmt(total);
+      if (stEl)  stEl.textContent  = fmt(total);
+      breakdown.push({ nome: sec.nome, val: total });
+    });
+
+    grandTotal += abaTotal;
+
+    const gtEl = document.getElementById('grand-total-' + aba.id);
+    const cm2El = document.getElementById('custo-m2-' + aba.id);
+    const bdEl  = document.getElementById('breakdown-' + aba.id);
+    const tabEl = document.getElementById('tab-total-' + aba.id);
+
+    if (gtEl)  gtEl.textContent  = fmt(abaTotal);
+    if (tabEl) tabEl.textContent = fmt(abaTotal);
+    if (cm2El) {
+      if (aba.id === 'casa') {
+        const areaPiso = DATA._meta.area_piso_m2 || 100;
+        cm2El.textContent = fmt(abaTotal / areaPiso) + ' / m² (base ' + areaPiso + ' m²)';
+      } else {
+        cm2El.textContent = fmt(abaTotal / 57) + ' / m² (base 57 m²)';
+      }
+    }
+    if (bdEl) bdEl.innerHTML = breakdown.map(b =>
+      `<div>${b.nome}: <span>${fmt(b.val)}</span></div>`).join('');
   });
 
-  document.getElementById('grand-total').textContent = fmt(grand);
-  document.getElementById('grand-total-header').textContent = fmt(grand);
-  const areaPiso = DATA._meta.area_piso_m2 || 100;
-  document.getElementById('custo-m2').textContent = fmt(grand / areaPiso) + ' / m² (base ' + areaPiso + ' m²)';
-
-  document.getElementById('breakdown').innerHTML = breakdown.map(b =>
-    `<div>${b.nome}: <span>${fmt(b.val)}</span></div>`
-  ).join('');
+  document.getElementById('grand-total-header').textContent = fmt(grandTotal);
 }
 
 // ── SAVE / EXPORT / IMPORT ─────────────────────────────────
@@ -384,13 +416,11 @@ function importJSON(event) {
   reader.onload = e => {
     try {
       prices = JSON.parse(e.target.result);
-      renderSections();
-      recalc();
+      renderPanels();
+      recalcAll();
       markDirty();
       showToast('Preços importados — clique em Salvar ✓');
-    } catch(err) {
-      showToast('Erro ao importar JSON');
-    }
+    } catch(err) { showToast('Erro ao importar JSON'); }
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -403,7 +433,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// Aviso ao sair sem salvar
 window.addEventListener('beforeunload', e => {
   if (dirty) { e.preventDefault(); e.returnValue = ''; }
 });
